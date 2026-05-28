@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplementary Materials - EEG/MEG Fusion</title>
+    <style>
+        /* 全局样式重置与基础设置 */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            background-color: #f4f6f9;
+        }
+        
+        /* 导航栏 */
+        nav {
+            background: #0F4761;
+            padding: 1rem 0;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-weight: 500;
+            font-size: 1.1em;
+            transition: opacity 0.3s;
+        }
+        nav a:hover { opacity: 0.8; }
+
+        /* 头部标题 */
+        header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, #1a73e8 0%, #0F4761 100%);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 { font-size: 2.5em; margin: 0.5rem 0; font-weight: 300; }
+        h2 { color: #0F4761; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; margin-top: 2rem; }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #d32f2f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 1rem 0;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover { background: #b71c1c; }
+
+        /* 摘要卡片样式 - 修改为上下布局，移除 flex */
+        .abstract-container {
+            display: block; /* 改为 block，让卡片垂直堆叠 */
+            margin: 2rem 0;
+            text-align: left;
+        }
+        .abstract-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 4px solid #1a73e8;
+            margin-bottom: 1.5rem; /* 增加底部间距，区分两个摘要 */
+        }
+        .abstract-card h3 { 
+            margin-top: 0; 
+            color: #1a73e8; 
+            font-size: 1.3em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+        .abstract-card p {
+            text-indent: 2em;
+            margin: 0.8rem 0;
+            line-height: 1.9;
+        }
+
+        /* 图片与图表容器 */
+        .figure-container {
+            text-align: center;
+            margin: 2rem 0;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .figure-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .fig-caption {
+            font-style: italic;
+            color: #555;
+            font-size: 0.95em;
+            margin-top: 0.5rem;
+        }
+
+        /* 两列布局用于并排显示图片 */
+        .image-row {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+        .image-item {
+            text-align: center;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* 未来发展方向模块 */
+        .future-dev {
+            background: linear-gradient(135deg, #f0f4c3 0%, #dcedc8 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+            text-align: center;
+            border: 2px dashed #8bc34a;
+        }
+        .future-dev h2 {
+            color: #33691e;
+            border: none;
+        }
+        .future-dev video {
+            max-width: 80%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin: 1.5rem 0;
+        }
+
+        /* 视频展示区 (新的介绍视频) */
+        .video-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .video-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 45%;
+            min-width: 300px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .video-card:hover { transform: translateY(-5px); }
+        .video-card h3 {
+            margin: 0;
+            padding: 1rem;
+            background: #f0f0f0;
+            font-size: 1.2em;
+            border-top: 3px solid #1a73e8;
+        }
+        .video-card video {
+            width: 100%;
+            display: block;
+        }
+
+        /* 联系信息 */
+        .contact {
+            background: #e8f4fd;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: #888;
+            font-size: 0.9em;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- 导航栏 -->
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#data">Experimental Data</a>
+        <a href="#future">Future Development</a>
+        <a href="#videos">Video Tutorials</a>
+    </nav>
+
+    <!-- 头部标题与PDF下载 -->
+    <header id="home">
+        <h1>EEG-MEG Brain Network Classification via Graph Attention Fusion and Topological Features</h1>
+        <p>EEG & MEG Multimodal Fusion Research</p>
+
+<div class="figure-container">
+    <p>Preview the full academic poster directly below:</p>
+    <!-- width和height可以根据你的网页排版调整 -->
+    <iframe src="poster.pdf" width="100%" height="800px" style="border: none; border-radius: 10px;">
+        您的浏览器不支持 iframe 嵌入 PDF，请点击下方按钮下载查看。
+    </iframe>
+</div>
+    </header>
+
+
+
+    <!-- 英文与中文摘要 -->
+   <section class="abstract-container">
+        
+        <!-- 英文摘要 (在上) -->
+        <div class="abstract-card">
+            <h3>Abstract (English)</h3>
+            <p>
+                Electroencephalography (EEG) and magnetoencephalography (MEG) represent two widely used non-invasive neuroimaging methods, both capable of capturing neural activity at millisecond temporal resolution. The key difference lies in their sensitivity patterns: EEG responds to radial and tangential current sources alike, whereas MEG predominantly picks up tangential sources with better spatial localization. Combining these two modalities could give researchers a more complete picture of how brain activity unfolds over time.
+            </p>
+            <p>
+                To address these challenges, this work introduces DAF-Net (short for Deep Attention Fusion Network), a graph neural network architecture designed specifically for EEG-MEG fusion, together with a complementary Topological Data Analysis (TDA) approach. Within the DAF-Net framework, we first build separate brain networks for each modality based on functional connectivity, then apply Graph Convolutional Networks (GCNs) to capture spatial relationships and bidirectional LSTM networks to model temporal dynamics.
+            </p>
+            <p>
+                We validate the proposed approach on the Wakeman-Henson face-recognition dataset. In a four-subject trial-level evaluation using binary classification (famous vs unfamiliar faces), DAF-Net achieved a peak classification accuracy of <strong>79.72%</strong>.
+            </p>
+        </div>
+
+        <!-- 中文摘要 (在下) -->
+        <div class="abstract-card">
+            <h3>摘要 (中文)</h3>
+            <p>
+                脑电图（EEG）与脑磁图（MEG）作为互补的无创神经成像技术，能够提供高时间分辨率的脑活动测量。其中，EEG对径向和切向电流源均敏感，而MEG主要检测切向源且具有更高的空间精度。融合这两种模态有望更全面地理解神经动力学；然而，由于二者物理属性不同、通道拓扑结构各异，其融合仍然面临挑战。
+            </p>
+            <p>
+                本文提出了一种新颖的图神经网络（GNN）框架——DAF-Net（深度注意力融合网络），以及一套鲁棒的拓扑数据分析（TDA）流程。DAF-Net利用功能连通性度量构建模态特异性脑网络，并通过图卷积网络（GCN）和双向长短期记忆网络（BiLSTM）提取空间与时间特征。该网络的核心创新在于一种双向交叉注意力机制。
+            </p>
+            <p>
+                我们在Wakeman-Henson面孔加工MEEG数据集上评估了所提方法。实验结果表明，DAF-Net实现了 <strong>79.72%</strong> 的分类准确率，在当前四名受试者的trial-level设置下表现优于单模态方法。
+            </p>
+        </div>
+    </section>
+
+    <!-- 关键词 -->
+    <div style="text-align: center; margin: 2rem 0; color: #555;">
+        <strong>Keywords:</strong> EEG-MEG fusion; Graph Neural Networks; Topological Data Analysis
+    </div>
+
+    <!-- 原有的视频介绍板块 -->
+    <h2 id="videos">Technical Video Tutorials</h2>
+    <p style="text-align: center; color: #666; margin-bottom: 2rem;">Introduction to EEG and MEG principles</p>
+    
+    <div class="video-gallery">
+        <!-- EEG 介绍视频 -->
+        <div class="video-card">
+            <h3>EEG Introduction</h3>
+            <video controls>
+                <source src="video/eeg.mp4" type="video/mp4">
+                您的浏览器不支持 HTML5 video 标签。
+            </video>
+        </div>
+
+        <!-- MEG 介绍视频 -->
+        <div class="video-card">
+            <h3>MEG Introduction</h3>
+            <video controls>
+                <source src="video/meg.mkv" type="video/mp4">
+                您的浏览器不支持 HTML5 video 标签。
+            </video>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 原始与处理后的波形图 -->
+    <!-- ============================================== -->
+    <h2 id="data">Experimental Waveforms & Data</h2>
+    
+    <!-- 原始波形 (Before Filtering) -->
+    <div class="figure-container">
+        <h3>1. Raw Signals</h3>
+        
+        <div class="image-row">
+            <div class="image-item">
+                <img src="images/eeg_raw.png" alt="EEG Raw Waveform">
+                <div class="fig-caption">a) EEG Raw Waveform (Seconds 30-40)</div>
+            </div>
+            <div class="image-item">
+                <img src="images/meg_raw.png" alt="MEG Raw Waveform">
+                <div class="fig-caption">b) MEG Raw Waveform (Seconds 30-40)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 滤波后波形 (After Filtering) -->
+    <div class="figure-container">
+        <h3>2. Filtered Signals</h3>
+        
+        <div class="image-row">
+            <div class="image-item">
+                <img src="images/eeg_filtered.png" alt="EEG Filtered Waveform">
+                <div class="fig-caption">a) EEG Filtered Waveform</div>
+            </div>
+            <div class="image-item">
+                <img src="images/meg_filtered.png" alt="MEG Filtered Waveform">
+                <div class="fig-caption">b) MEG Filtered Waveform</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Epoch 切片展示 -->
+    <h2>Epoch Segmentation</h2>
+    <div class="figure-container">
+        <h3>2. Single Trial Extraction (Epoch)</h3>
+        
+        <div class="image-row">
+            <div class="image-item">
+                <img src="images/eegepoch.png" alt="EEG Epoch">
+                <div class="fig-caption">a) EEG Epoch (9th epoch)</div>
+            </div>
+            <div class="image-item">
+                <img src="images/megepoch.png" alt="MEG Epoch">
+                <div class="fig-caption">b) MEG Epoch (9th epoch)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 能做什么 -->
+    <section id="future" class="future-dev">
+        <h2>What can this research be used for?</h2>
+        <p>In the future, we will be able to use brainwave patterns to analyse what the human eye is seeing</p>
+        
+        <!-- 未来发展方向视频 -->
+        <video controls>
+            <source src="video/regenerate.mp4" type="video/mp4">
+            您的浏览器不支持 HTML5 video 标签。
+        </video>
+        
+        <p><small>Concept visualization of the next-phase algorithm architecture</small></p>
+    </section>
+
+
+
+    <!-- 联系方式 -->
+    <div class="contact">
+        <h3>Contact Information</h3>
+        <p><strong>Team leader:</strong> Binglin Hou - <a href="mailto:1954399317@qq.com">1954399317@qq.com</a></p>
+        <p><strong>Advisor:</strong> Professor Zheng Yang</p>
+    </div>
+
+    <footer>
+        <p>Supplementary Materials for Academic Research | Optimized Layout</p>
+    </footer>
+
+</body>
+</html>
